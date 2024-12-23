@@ -8,7 +8,7 @@ This project implements an agent that generates and optimizes SAS code to answer
 
 1. **Metadata Verification:**
     *   The `MetadataVerifier` class uses an LLM to critically assess the relevance of selected metadata (databases and columns) for a given query.
-    *   It checks for missing essential columns (e.g., `NUMERO_POLICE`, `NUMERO_SINISTRE`), completeness of columns needed for calculations, filtering, grouping, and output, and adherence to business rules (e.g., mapping query terms like "matériel" to specific columns like `TYPE_SINISTRE`).
+    *   It checks for missing essential columns, completeness of columns needed for calculations, filtering, grouping, and output, and adherence to business rules.
     *   The verifier provides feedback on whether the metadata is approved and suggests improvements if needed.
 
 2. **Cached Metadata Generation:**
@@ -19,7 +19,7 @@ This project implements an agent that generates and optimizes SAS code to answer
 
 3. **System Prompt Generation:**
     *   `get_system_prompt` creates a detailed system prompt for the LLM, instructing it to act as "StarData," an expert SAS coding agent.
-    *   The prompt provides the necessary metadata, outlines steps for code generation, and includes numerous very important notes such as column naming conventions, type consistency, error handling, and specific treatment of "sinistres" (accidents).
+    *   The prompt provides the necessary metadata, outlines steps for code generation, and includes numerous very important notes such as column naming conventions, type consistency, error handling.
     *   The prompt is tailored to the specific problem domain (automobile insurance).
 
 4. **Code Correction and Requirement Analysis:**
@@ -156,7 +156,7 @@ This detailed metadata dictionary is essential for the agent's ability to unders
     This will prompt you to enter your Google API key.
 
 3. **Prepare Metadata:**
-    *   Create a JSON file (`meta_corrected.json` in this example) containing the database metadata. The format should be a dictionary where keys are database names and values are dictionaries containing column names, descriptions, types, and optional values.
+    *   Create a JSON file (`meta_data.json` in this example) containing the database metadata. The format should be a dictionary where keys are database names and values are dictionaries containing column names, descriptions, types, and optional values.
 
 4. **Configure SAS Session:**
     *   Create a SAS configuration file (`sascfg.py`) for `saspy`. Refer to the `saspy` documentation for details on configuration options.
