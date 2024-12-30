@@ -19,8 +19,36 @@ The system employs four specialized LLM agents, each with a distinct role:
 
 ### Metadata Management
 
--   **`MetadataVerifier`:** Critically analyzes the selected metadata to ensure it contains the necessary databases and columns to answer the query.
--   **`CachedMetadata`:** A singleton class that generates and caches the smallest set of relevant metadata extracted from a larger metadata dictionary based on the input query. It uses an LLM to identify essential databases and columns and includes a verification and regeneration mechanism.
+-   **`MetadataSelector`:** This class orchestrates the entire metadata selection process. It leverages a language model (LLM) to intelligently choose relevant databases and columns from a larger metadata pool based on a user's natural language query. It features an iterative approach with verification and refinement at each step to ensure accuracy.
+    -   **Database Selection:**  Uses the LLM to analyze the query and identify potentially relevant databases. It then employs `MetadataVerifier` to validate these choices and iteratively refines the selection based on feedback, up to a maximum number of iterations.
+    -   **Column Selection:** For each selected database, it performs a two-stage column selection:
+        1. **Analysis:** The LLM analyzes the query in the context of the chosen database to identify key entities, filter conditions, and required calculations.
+        2. **Selection:** Based on the analysis, the LLM selects specific columns from the database, adhering to predefined rules (e.g., column equivalence, calculation shortcuts). `MetadataVerifier` then validates these choices, and the selection is refined iteratively.
+    -   **Question Expansion:** Before database selection, the `MetadataSelector` can expand the original user question using an LLM. This expansion clarifies ambiguities, incorporates domain-specific knowledge, and makes the question more amenable to metadata selection.
+    - The `MetadataSelector` class also includes several helper methods:
+        - `_format_database_descriptions`: Formats database descriptions for use in prompts.
+        - `_get_llm_response`: Gets a raw response from the LLM given a prompt.
+        - `_parse_database_selection`: Parses the LLM's database selection response.
+        - `_perform_column_analysis`: Performs the column analysis step using the LLM.
+        - `_perform_column_selection`: Performs the column selection step using the LLM.
+        - `_refine_databases`: Refines the database selection based on verification feedback.
+        - `_refine_columns`: Refines the column selection based on verification feedback.
+        - `_build_final_metadata`: Builds the final metadata dictionary from the selected databases and columns.
+
+-   **`MetadataVerifier`:** This class is responsible for critically evaluating the selected metadata (both databases and columns) to ensure it aligns with the query's requirements.
+    -   **Database Verification:** It uses the LLM to assess aspects like temporal coverage, processing requirements, and overall completeness of the chosen databases.
+    -   **Column Verification:** It checks for the presence of mandatory columns, fulfillment of query requirements, and adherence to specific rules.
+    -   **Feedback Mechanism:** Provides detailed feedback on the selection, including analysis, suggested improvements (additions/removals), and an explanation of the verification result. It also stores the raw LLM response for debugging.
+
+-   **`ResponseSchemas`:** This class defines the structure and format of the expected responses from the LLM during various stages (database selection, column analysis, verification). It uses `ResponseSchema` objects from `langchain.output_parsers` to specify field names, types, and descriptions, facilitating structured output parsing.
+
+-   **`PromptTemplates`:** This class stores the templates for the prompts used to interact with the LLM. Each template is designed for a specific task (e.g., database selection, column analysis, verification) and includes placeholders for dynamic content like the question, available databases/columns, and previous verification feedback. It also enforces specific rules and instructions for the LLM to follow.
+
+-   **`DatabaseMetadata` and `ColumnMetadata`:** Simple classes to represent a database and a column, respectively, holding the name and description of each.
+
+-   **`VerificationResult`:** A Pydantic `BaseModel` to encapsulate the result of a verification step. It includes fields like `is_valid` (boolean), `analysis` (dictionary), `improvements` (dictionary), `explanation` (string), and `raw_response` (string, optional).
+
+-   **`format_metadata_to_string`:** A utility function to convert the metadata dictionary into a human-readable string, useful for debugging or displaying the selected metadata.
 
 ### Tree Search
 
