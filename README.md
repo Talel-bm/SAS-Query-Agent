@@ -91,17 +91,6 @@ The core of the system is a tree search algorithm that explores the solution spa
     -   After the search terminates, the `get_best_solution` method of the root node retrieves the best solution found.
     -   If a solution is found and accepted, the `extract_data` function can be used to execute the SAS code and save the results to an Excel file.
 
-## Key Improvements and Adaptations
-
--   **SAS Code Generation:** The system is specifically designed to generate SAS code, leveraging the `saspy` library for execution.
--   **Actuarial Context:** The agents are tailored to understand actuarial concepts, particularly in automobile insurance, through specific instructions in their system prompts.
--   **Metadata Handling:** The `CachedMetadata` class and `MetadataVerifier` ensure efficient and accurate use of metadata, crucial for generating relevant SAS code.
--   **Error Categorization:** The Critic's `_get_error_reflection` function now attempts to categorize errors (syntax, runtime, logical) for more targeted debugging.
--   **Requirements Reflection:** The Critic's `_get_requirement_reflection` function uses a structured output (via `PydanticOutputParser`) to determine whether the generated code meets the query's requirements.
--   **Strategy Adherence Reflection:** The Critic's `_get_strategy_adherence_reflection` function also uses a structured output to provide a numerical score and reasoning for how well the code adheres to the given strategy.
--   **Dynamic Expansion:** The tree expansion can dynamically generate new strategies based on the Critic's score, allowing for more exploration when promising solutions are found.
--   **Verification:** The Critic includes a `verify_solution` function to assess the robustness of solutions that pass visible test cases, reducing the risk of overfitting.
-
 ## Setup and Usage
 
 1. **Install Dependencies:**
