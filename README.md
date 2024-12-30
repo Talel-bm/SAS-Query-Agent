@@ -70,8 +70,7 @@ The core of the system is a tree search algorithm that explores the solution spa
 
 1. **Initialization:**
     -   The user provides a data-related query and a metadata JSON dictionary.
-    -   The `CachedMetadata` singleton generates and caches the relevant subset of metadata.
-    -   Configuration parameters are set (e.g., weights for scoring, thresholds for aborting/expanding).
+    -   The `MetadataSelector` singleton generates and caches the relevant subset of metadata.
 
 2. **Initial Strategy Generation:**
     -   The `generate_initial_strategies` function uses the Thinker agent to generate multiple strategies for answering the query.
