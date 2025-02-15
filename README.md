@@ -46,7 +46,7 @@ This approach utilizes a metadata-driven strategy, requiring users to create str
 
 ## Important Files
 
-*   `sas query agent.ipynb`: The main notebook.
+*   `text-to-sql tool.ipynb`: The main notebook.
 *   `sascfg.py`:  `saspy` configuration.
 *   `_authinfo.`:  SAS authentication credentials.
 *   `metadata.json`: **You must create this file.**
