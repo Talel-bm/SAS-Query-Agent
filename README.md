@@ -35,7 +35,7 @@ This approach utilizes a metadata-driven strategy, requiring users to create str
 
 ## Usage
 
-1.  Open the provided Jupyter Notebook (`sas query agent.ipynb`).
+1.  Open the provided Jupyter Notebook (`text-to-sql tool.ipynb`).
 2.  Configure the notebook with your SAS connection details, API key, and *paths to your metadata and memory files.*
 3.  Use the `DATA_RETRIEVER` function with your natural language query. Use `dev_mode=True` initially for feedback.
 
