@@ -51,10 +51,3 @@ This approach utilizes a metadata-driven strategy, requiring users to create str
 *   `_authinfo.`:  SAS authentication credentials.
 *   `metadata.json`: **You must create this file.**
 *   `agent_memory.json`: **You must create this file.**
-
-## Contributing
-
-Contributions are welcome (bug reports, feature requests). Do not include sensitive data files.
-
-## License
-
